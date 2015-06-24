@@ -190,9 +190,9 @@ AppDispatcher.register(function(action) {
       break;
 
     case TodoConstants.TODO_CHANGE_CASE:
-    var changedTodo = changeCase(action.id);
-    update(action.id, {text: changedTodo.text, textCase: changedTodo.textCase});
-    TodoStore.emitChange();
+      var changedTodo = changeCase(action.id);
+      update(action.id, {text: changedTodo.text, textCase: changedTodo.textCase});
+      TodoStore.emitChange();
     break;
 
     default:

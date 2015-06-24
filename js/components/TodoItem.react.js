@@ -59,12 +59,12 @@ var TodoItem = React.createClass({
             className="toggle"
             type="checkbox"
             checked={todo.complete}
-            onChange={this._onToggleComplete}
-          />
+            onChange={this._onToggleComplete}/>
           <label onDoubleClick={this._onDoubleClick}>
             {todo.text}
           </label>
           <button className="destroy" onClick={this._onDestroyClick} />
+          <button className="changeCase" onClick={this._onChangeCaseClick} >Toggle Case</button>
         </div>
         {input}
       </li>
@@ -92,6 +92,10 @@ var TodoItem = React.createClass({
 
   _onDestroyClick: function() {
     TodoActions.destroy(this.props.todo.id);
+  },
+
+  _onChangeCaseClick: function() {
+    TodoActions.changeCase(this.props.todo.id);
   }
 
 });

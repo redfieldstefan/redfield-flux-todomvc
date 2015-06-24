@@ -78,6 +78,14 @@ var TodoActions = {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_DESTROY_COMPLETED
     });
+  },
+
+  //CHANGE CASE OF LIST ITEM : ADDED BY STEFAN REDFIELD
+  changeCase: function(id) {
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.TODO_CHANGE_CASE,
+      id: id
+    });
   }
 
 };

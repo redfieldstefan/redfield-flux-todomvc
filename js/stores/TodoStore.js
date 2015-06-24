@@ -30,7 +30,8 @@ function create(text) {
   _todos[id] = {
     id: id,
     complete: false,
-    text: text
+    text: text,
+    letterCase: null
   };
 }
 
@@ -75,6 +76,26 @@ function destroyCompleted() {
     }
   }
 }
+
+function changeCase(id) {
+  var thisTodo = _todos[id];
+  if(thisTodo.letterCase === "titleCase" || !thisTodo.letterCase) {
+    thisTodo.text = thisTodo.text.toUpperCase();
+    thisTodo.letterCase = "upper";
+  } else if (thisTodo.letterCase === "upper") {
+    thisTodo.text = thisTodo.text.toLowerCase();
+    thisTodo.letterCase = "lower";
+  } else if (thisTodo.letterCase === "lower") {
+    var letterArray = thisTodo.text.split(' ');
+    var capped = letterArray.map(function(word){
+      return word.charAt(0).toUpperCase() + word.substring(1);
+    });
+    console.log(capped);
+    thisTodo.text = capped.join(' ');
+    thisTodo.letterCase = "titleCase";
+  }
+  return thisTodo;
+};
 
 var TodoStore = assign({}, EventEmitter.prototype, {
 
@@ -167,6 +188,12 @@ AppDispatcher.register(function(action) {
       destroyCompleted();
       TodoStore.emitChange();
       break;
+
+    case TodoConstants.TODO_CHANGE_CASE:
+      var changedTodo = changeCase(action.id);
+      update(action.id, {text: changedTodo.text, textCase: changedTodo.textCase});
+      TodoStore.emitChange();
+    break;
 
     default:
       // no op
